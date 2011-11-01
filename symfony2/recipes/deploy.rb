@@ -28,7 +28,14 @@ node[:deploy].each do |application, deploy|
     command "php app/console doctrine:migrations:migrate --no-interaction --env=scalarium"
     action :run
   end
-
+  
+  execute "installing assets" do
+    user "deploy"
+    cwd deploy[:current_path]
+    command "php app/console assets:install web --env=scalarium"
+    action :run
+  end
+  
   execute "chown app cache and log dirs to deploy:www-data" do
     user "root"
     cwd deploy[:current_path]
