@@ -32,7 +32,7 @@ node[:deploy].each do |application, deploy|
   execute "chown app cache and log dirs to deploy:www-data" do
     user "root"
     cwd deploy[:current_path]
-    command "mkdir -p app/cache; chown -R deploy:www-data app/cache; chown -R deploy:www-data app/logs; find app/cache -type d | xargs chmod 0770; find app/cache -type f | xargs chmod 0660; find app/logs -type d | xargs chmod 0770; find app/logs -type f | xargs chmod 0660;"
+    command "mkdir -p app/cache; chown -R deploy:www-data app/cache; chown -R deploy:www-data app/logs; find app/cache -type d | xargs chmod -f 0770; find app/cache -type f | xargs chmod -f 0660; find app/logs -type d | xargs chmod -f 0770; find app/logs -type f | xargs chmod -f 0660;"
     action :run
   end
   
