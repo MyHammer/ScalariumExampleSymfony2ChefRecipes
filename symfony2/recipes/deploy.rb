@@ -22,13 +22,6 @@ node[:deploy].each do |application, deploy|
     action :run
   end
   
-  execute "create db schema" do
-    user "deploy"
-    cwd deploy[:current_path]
-    command "php app/console doctrine:database:create --env=scalarium"
-    action :run
-  end
-  
   execute "execute db migrations" do
     user "deploy"
     cwd deploy[:current_path]
