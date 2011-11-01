@@ -1,0 +1,14 @@
+# <%= @appname %>
+NameVirtualHost 0.0.0.0:80
+<VirtualHost 0.0.0.0:80>
+  DocumentRoot "<%= @appdir %>/web"
+  DirectoryIndex app_scalarium.php
+  <Directory "<%= @appdir %>/web">
+    AllowOverride None
+    Allow from all
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ app_scalarium.php [QSA,L]
+  </Directory>
+</VirtualHost>
+
