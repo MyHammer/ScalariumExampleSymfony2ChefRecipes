@@ -1,0 +1,30 @@
+NameVirtualHost 0.0.0.0:80
+<VirtualHost 0.0.0.0:80>
+  DocumentRoot "<%= @params[:docroot] %>"
+  DirectoryIndex app_scalarium.php
+
+  <Directory "<%= @params[:docroot] %>">
+    AllowOverride None
+    Allow from all
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ app_scalarium.php [QSA,L]
+  </Directory>
+
+  <Directory ~ "\.svn">
+    Order allow,deny
+    Deny from all
+  </Directory>
+  
+  <Directory ~ "\.git">
+    Order allow,deny
+    Deny from all
+  </Directory>
+
+  LogLevel info
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-ganglia.log ganglia
+  RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
+  
+</VirtualHost>
